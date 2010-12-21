@@ -53,6 +53,9 @@ TextileEditorPopup.prototype = {
     this.popupElement.getElementsBySelector('.transform_choice input').each(function(item) {
       Event.observe(item, 'click', this.switchTransformChoice.bindAsEventListener(this));
     }.bind(this));
+    this.popupElement.getElementsBySelector('.size_choice input').each(function(item) {
+      Event.observe(item, 'click', this.switchTransformChoice.bindAsEventListener(this));
+    }.bind(this));
     
     this.initializeAttachments();
     
@@ -329,11 +332,16 @@ Object.extend(Object.extend(ImagePopup.prototype,TextileEditorPopup.prototype), 
       break
       case 'attachment':
         attachment = $('img_attachment_text');
+        attachment_size = Form.getInputs('image_transform_form','radio','size_choice').find(function(radio) { return radio.checked; });
+        attachment_size_text = ""
+        if (! attachment_size.value.match(/original/)) {
+            attachment_size_text = ' size="'+ attachment_size.value+'"';
+        }
         attachmentValue = attachment.value;
         if (altText == '') {
-          textInsert = '<r:attachment:image name="'+attachmentValue+'" />';
+          textInsert = '<r:attachment:image name="'+attachmentValue+'" '+ attachment_size_text +' />';
         } else {
-          textInsert = '<r:attachment:image name="'+attachmentValue+'" alt="'+altText+'" />';
+          textInsert = '<r:attachment:image name="'+attachmentValue+'" '+ attachment_size_text +' alt="'+altText+'" />';
         }
       break
       default: alert('something wrong'); 

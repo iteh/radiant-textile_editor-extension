@@ -28,6 +28,15 @@
                 %p.help.advisory
                   %strong= t('textile_editor.image_size_and_type')
                   = t('textile_editor.image_resized')
+                  %br
+                  %br
+                  %input{:type => "radio", :name => "size_choice", :value => "original" , :checked => true}
+                  = t('textile_editor.original_size')
+                  - PageAttachment.attachment_options[:thumbnails].each do |size_name,size_value|
+                    %br
+                    %input{:type => "radio", :name => "size_choice", :value => size_name.to_s}
+                    = "#{size_name.to_s} (#{size_value})"
+
                 %p.help.no-files{:style => 'display:none;'}
                   %strong= t('textile_editor.missing_image_attachment')
                   = t('textile_editor.attach_image_and_return')
